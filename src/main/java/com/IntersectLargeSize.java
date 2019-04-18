@@ -84,6 +84,52 @@ public class IntersectLargeSize {
     }
 
     /**
+     * IntersectLargeSize with loop with starting point memoization and size control.
+     *
+     * @param plan the plan
+     */
+    @Benchmark
+    public void intersectWithLoopSizeControl(final ExecutionPlan plan) {
+
+        // to define outer array with less length
+        int[] lr1;
+        int[] lr2;
+        if (plan.ar1.length < plan.ar2.length) {
+            lr1 = plan.ar1;
+            lr2 = plan.ar2;
+        }
+        else {
+            lr1 = plan.ar2;
+            lr2 = plan.ar1;
+        }
+
+        // to stop iterate outer array if last value in inner is bigger
+        int lastInnerValue = lr2[lr2.length - 1];
+
+        List<Integer> result = new ArrayList<>();
+
+        // to start iterate inner array from last position
+        int startingPoint = 0;
+        for (int value : lr1) {
+
+            if (value > lastInnerValue)
+                break;
+
+            for (int i = startingPoint; i < lr2.length; i++) {
+
+                if (lr2[i] > value)
+                    break;
+
+                if (lr2[i] == value) {
+                    result.add(value);
+                    startingPoint = i;
+                    break;
+                }
+            }
+        }
+    }
+
+    /**
      * IntersectLargeSize with hash.
      *
      * @param plan the plan
