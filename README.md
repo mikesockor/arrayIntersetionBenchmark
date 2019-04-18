@@ -1,4 +1,4 @@
-# java sorted array intersetion JMH benchmark
+# java sorted array intersection JMH benchmark
 
 benchmark mode is Throughput and in this case higher value of score is better.
 
@@ -13,6 +13,16 @@ Intersect.intersectWithLoop1    thrpt    5   0.006 ±  0.001  ops/ns
 Intersect.intersectWithLoop2    thrpt    5   0.006 ±  0.003  ops/ns
 Intersect.intersectWithStream1  thrpt    5  ≈ 10⁻⁴           ops/ns
 Intersect.intersectWithStream2  thrpt    5   0.002 ±  0.001  ops/ns
+```
+
+### small example abnormal distribution
+ar1 = new int[] { 22, 23, 24, 25, 26 }; </br>
+ar2 = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23 };
+
+```
+Benchmark                                     Mode  Cnt  Score   Error   Units
+IntersectDiffSize.intersectWithLoopOriginal  thrpt    5  0.011 ± 0.001  ops/ns
+IntersectDiffSize.intersectWithLoopReverted  thrpt    5  0.009 ± 0.001  ops/ns
 ```
 
 ### quite large example
