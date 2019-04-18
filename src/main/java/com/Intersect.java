@@ -22,7 +22,7 @@ import org.openjdk.jmh.annotations.State;
  * @author S750976
  */
 @Fork(value = 1, warmups = 1)
-@BenchmarkMode({ Mode.SampleTime })
+@BenchmarkMode({ Mode.Throughput })
 //@BenchmarkMode({ Mode.SampleTime, Mode.AverageTime })
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 public class Intersect {
