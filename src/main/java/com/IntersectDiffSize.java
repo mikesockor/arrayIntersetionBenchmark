@@ -30,49 +30,49 @@ public class IntersectDiffSize {
 
         @Setup(Level.Invocation)
         public void setUp() {
-            ar1 = new int[] { 22, 23, 24, 25, 26 };
-            ar2 = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23 };
+            ar1 = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23 };
+            ar2 = new int[] { 22, 23, 24, 25, 26, 27, 28, 29, 30 };
         }
     }
 
     /**
-     * IntersectLargeSize with loop with starting point memoization.
+     * IntersectLargeSize with loop with starting point memoization and size control.
      *
      * @param plan the plan
      */
     @Benchmark
-    public void intersectWithLoopOriginal(final ExecutionPlan plan) {
+    public void intersectWithLoopSizeControl(final ExecutionPlan plan) {
 
-        List<Integer> result = new ArrayList<>();
-        int startingPoint = 0;
-        for (int value : plan.ar1) {
-            for (int i = startingPoint; i < plan.ar2.length; i++) {
-                if (plan.ar2[i] > value)
-                    break;
-                if (plan.ar2[i] == value) {
-                    result.add(value);
-                    startingPoint = i;
-                    break;
-                }
-            }
+        // to define outer array with less length
+        int[] lr1;
+        int[] lr2;
+        if (plan.ar1.length < plan.ar2.length) {
+            lr1 = plan.ar1;
+            lr2 = plan.ar2;
         }
-    }
+        else {
+            lr1 = plan.ar2;
+            lr2 = plan.ar1;
+        }
 
-    /**
-     * IntersectLargeSize with loop with starting point memoization.
-     *
-     * @param plan the plan
-     */
-    @Benchmark
-    public void intersectWithLoopReverted(final ExecutionPlan plan) {
+        // to stop iterate outer array if last value in inner is bigger
+        int lastInnerValue = lr2[lr2.length - 1];
 
         List<Integer> result = new ArrayList<>();
+
+        // to start iterate inner array from last position
         int startingPoint = 0;
-        for (int value : plan.ar2) {
-            for (int i = startingPoint; i < plan.ar1.length; i++) {
-                if (plan.ar1[i] > value)
+        for (int value : lr1) {
+
+            if (value > lastInnerValue)
+                break;
+
+            for (int i = startingPoint; i < lr2.length; i++) {
+
+                if (lr2[i] > value)
                     break;
-                if (plan.ar1[i] == value) {
+
+                if (lr2[i] == value) {
                     result.add(value);
                     startingPoint = i;
                     break;
