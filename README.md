@@ -3,7 +3,7 @@
 benchmark mode is Throughput and in this case higher value of score is better.
 
 ### small example
-ar1 = new int[] { 1, 2, 3, 3, 7, 8, 11, 20, 23, 34, 67 };
+ar1 = new int[] { 1, 2, 3, 3, 7, 8, 11, 20, 23, 34, 67 }; </p>
 ar2 = new int[] { 0, 3, 11, 23, 23, 56, 67, 78, 90, 100, 100, 123, 145, 156, 178, 190 };
 
 ```
@@ -16,7 +16,7 @@ Intersect.intersectWithStream2  thrpt    5   0.002 ±  0.001  ops/ns
 ```
 
 ### quite large example
-ar1 = intStream.limit(3000000).sorted().toArray();
+ar1 = intStream.limit(3000000).sorted().toArray();</p>
 ar2 = intStream.limit(5000000).sorted().toArray();
 
 ```
